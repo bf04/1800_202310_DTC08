@@ -6,15 +6,13 @@ State your app in a nutshell, or one-sentence pitch. Give some elaboration on wh
 This browser based web application to ...
 
 ## 2. Names of Contributors
-<<<<<<< HEAD
+
 List team members and/or short bio's here... 
 * Bonjour j'emappelle Sarah. 
 * WHats happening
 * ...
 * Hello
 
-	
-=======
 
 List team members and/or short bio's here...
 
@@ -23,7 +21,6 @@ List team members and/or short bio's here...
 * brYAN IS HERE
 * sARAH MIGHT BE HERE
 
->>>>>>> 4c1e3973c7a451943fcc93837394be5fb2cfe815
 ## 3. Technologies and Resources Used
 
 List technologies (with version numbers), API's, icons, fonts, images, media or data sources, and other resources that were used.
