@@ -7,13 +7,6 @@ This browser based web application to ...
 
 ## 2. Names of Contributors
 
-List team members and/or short bio's here... 
-* Bonjour j'emappelle Sarah. 
-* WHats happening
-* ...
-* Hello
-
-
 List team members and/or short bio's here...
 
 * Hi my name is Ray! I'm excited to work on this project.

@@ -1,1 +1,25 @@
 
+.bg-info {
+    background-color: #ffffff;     /* some secondary colour */
+}
+
+.navbar-light .navbar-brand {
+    color: #000000;                           /* contrast to secondary colour */
+}
+
+.btn-primary {
+    color: #7C6A0A;                           /* contrast to secondary colour */
+    font-size: 150%;
+    background-color: #FA9500;                /* some secondary colour */
+    border-color: #eb6424;                    /* some accent colour */
+    border-width: thick
+}
+
+body {
+    background-color: #ffffff;                /* some primary colour */
+}
+
+.navbar-brand{
+    font-family: 'Yantramanav', cursive;
+    font-size: 2.25rem;
+}
