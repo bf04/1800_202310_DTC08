@@ -23,3 +23,61 @@ body {
     font-family: 'Yantramanav', cursive;
     font-size: 2.25rem;
 }
+
+/* Breadcrumb Navigation */
+.breadcrumb {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.breadcrumb li {
+  margin-right: 10px;
+}
+
+.breadcrumb li:last-child {
+  color: #666;
+  pointer-events: none;
+}
+
+.breadcrumb li a {
+  color: #0077c0;
+  text-decoration: none;
+}
+
+.breadcrumb li a:hover {
+  text-decoration: underline;
+}
+
+/* Tooltips */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
