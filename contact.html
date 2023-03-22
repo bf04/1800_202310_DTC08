@@ -14,6 +14,20 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
+<style>
+  footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+</style>
+
+
+
+
 
 <body>
   <header class="bg-light py-3">
@@ -60,7 +74,9 @@
               <label for="message">Message</label>
               <textarea class="form-control" id="message" rows="5" placeholder="Enter your message"></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-primary" onclick="submitForm()">Submit</button>
+
+
           </form>
         </div>
       </div>
@@ -68,7 +84,6 @@
   </main>
   <footer class="bg-light py-3 mt-auto">
     <div class="container text-center">
-      <span class="text-muted">&copy;
         <div class="row">
           <div class="col-md-12">
             <p class="mb-0">&copy; 2023 RescuEase. All Rights Reserved.</p>
@@ -76,6 +91,48 @@
         </div>
     </div>
   </footer>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-firestore.js"></script>
+
+<!-- Firebase Configuration -->
+<script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBBPHJhjEuykxQO_KmY7lUR822J7xw255c",
+      authDomain: "rescuease.firebaseapp.com",
+      projectId: "rescuease",
+      storageBucket: "rescuease.appspot.com",
+      messagingSenderId: "194794430069",
+      appId: "1:194794430069:web:0a185c212ccb9568ade23c"
+    };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<!-- Submit Form Script -->
+<script>
+  const db = firebase.firestore();
+
+  function submitForm() {
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var message = document.getElementById("message").value;
+
+    db.collection("contacts").add({
+        name: name,
+        email: email,
+        message: message
+      })
+      .then(function() {
+        alert("Thank you for your message!");
+      })
+      .catch(function(error) {
+        alert("Oops! Something went wrong. Please try again later.");
+        console.error("Error writing document: ", error);
+      });
+  }
+</script>
+
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
