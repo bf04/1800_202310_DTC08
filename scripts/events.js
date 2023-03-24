@@ -11,8 +11,6 @@ function toggleForm(show) {
 function populateEventList() {
   let template = document.getElementById("event-card-template");
 
-  document.querySelector("#event-list").innerHTML = "";
-
   const formatOptions = {
     month: "long",
     day: "2-digit",
@@ -25,6 +23,7 @@ function populateEventList() {
     .orderBy("start_time")
     .get()
     .then((events) => {
+      document.querySelector("#event-list").innerHTML = "";
       events.forEach((event) => {
         let description = event.data().description;
         let endTime = event.data().end_time;
