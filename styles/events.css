@@ -59,6 +59,10 @@ div.card p {
     margin: 0;
 }
 
+button {
+    margin-bottom: 1rem;
+}
+
 @media screen and (min-width: 800px) {
     div.card {
         padding: 2rem;

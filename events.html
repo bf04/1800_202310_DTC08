@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/events.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="scripts/firebaseapi.js"></script>
+    <script src="scripts/events.js"></script>
+    <title>Events</title>
+  </head>
+  <body>
+    <template id="event-card-template">
+      <div class="card">
+        <h3 id="event-name"></h3>
+        <p id="event-details"></p>
+        <ul>
+          <li id="event-location"></li>
+          <li id="event-start-time"></li>
+          <li id="event-end-time"></li>
+          <li id="event-required-participants"></li>
+        </ul>
+      </div>
+    </template>
+    <header>
+      <h2>RescuEase</h2>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="volunteer_log.html">Volunteer</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html">Sign Up</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Events</h1>
+      <form id="add-event-form" style="display: none">
+        <input
+          id="form-event-title"
+          type="text"
+          placeholder="Event title"
+        /><br />
+        <input
+          id="form-event-description"
+          type="text"
+          placeholder="General description"
+        /><br />
+        <input
+          id="form-event-location"
+          type="text"
+          placeholder="Event location"
+        /><br />
+        <input
+          id="form-event-start"
+          type="datetime-local"
+          placeholder="Event start time"
+        /><br />
+        <input
+          id="form-event-end"
+          type="datetime-local"
+          placeholder="Event end time"
+        /><br />
+        <input
+          id="form-event-participants"
+          type="number"
+          placeholder="Required volunteers"
+        /><br />
+        <input type="submit"></input>
+        <button id="cancel-form-button">Cancel</button>
+      </form>
+      <button id="show-form-button">Add Event</button>
+      <section id="event-list"></section>
+    </main>
+  </body>
+</html>
