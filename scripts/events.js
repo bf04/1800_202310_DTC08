@@ -1,13 +1,18 @@
 function toggleForm(show) {
   if (show) {
     document.querySelector("#add-event-form").style.display = "";
+    document.querySelector("#show-form-button").style.display = "none";
   } else {
     document.querySelector("#add-event-form").style.display = "none";
+    document.querySelector("#show-form-button").style.display = "";
   }
 }
 
 function populateEventList() {
   let template = document.getElementById("event-card-template");
+
+  document.querySelector("#event-list").innerHTML = "";
+
   const formatOptions = {
     month: "long",
     day: "2-digit",
@@ -17,12 +22,11 @@ function populateEventList() {
   };
 
   db.collection("events")
-    .orderBy("start_time") //NEW LINE; what do you want to sort by?
-    .get() //the collection called "events"
+    .orderBy("start_time")
+    .get()
     .then((events) => {
       events.forEach((event) => {
-        //iterate thru each doc
-        let details = event.data().details;
+        let description = event.data().description;
         let endTime = event.data().end_time;
         let location = event.data().location;
         let startTime = event.data().start_time;
@@ -31,9 +35,8 @@ function populateEventList() {
 
         let card = template.content.cloneNode(true);
 
-        //update title and text and image
         card.querySelector("#event-name").innerText = title;
-        card.querySelector("#event-details").innerText = details;
+        card.querySelector("#event-details").innerText = description;
         card.querySelector("#event-location").innerText =
           "Location: " + location;
         card.querySelector("#event-start-time").innerText =
@@ -43,25 +46,49 @@ function populateEventList() {
         card.querySelector("#event-required-participants").innerText =
           "Required Participants: " + requiredParticipants;
 
-        // card.querySelector("i").onclick = () => saveBookmark(docID);
-        //attach to gallery, Example: "events-go-here"
         document.querySelector("#event-list").appendChild(card);
-
-        // currentUser.get().then((userDoc) => {
-        //   //get the user name
-        //   let bookmarks = userDoc.data().bookmarks;
-        //   if (bookmarks.includes(docID)) {
-        //     document.getElementById("save-" + docID).innerText = "bookmark";
-        //   }
-        // });
       });
     });
+}
+
+function addEvent() {
+  let title = document.querySelector("#form-event-title").value;
+  let description = document.querySelector("#form-event-description").value;
+  let location = document.querySelector("#form-event-location").value;
+  let start_time = new Date(document.querySelector("#form-event-start").value);
+  let end_time = new Date(document.querySelector("#form-event-end").value);
+  let required_participants = document.querySelector(
+    "#form-event-participants"
+  ).valueAsNumber;
+
+  const currentUser = firebase.auth().currentUser;
+  if (currentUser !== null) {
+    db.collection("events")
+      .add({
+        title,
+        description,
+        location,
+        start_time,
+        end_time,
+        required_participants,
+        author: currentUser.uid,
+      })
+      .then(() => {
+        populateEventList();
+      });
+  } else {
+    alert("No user is signed in");
+  }
 }
 
 function setup() {
   populateEventList();
   document.querySelector("#show-form-button").addEventListener("click", () => {
     toggleForm(true);
+  });
+  document.querySelector("#add-event-form").addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    addEvent();
   });
 }
 
