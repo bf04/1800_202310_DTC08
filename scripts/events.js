@@ -75,10 +75,21 @@ function addEvent() {
       })
       .then(() => {
         populateEventList();
+        clearForm();
+        toggleForm(false);
       });
   } else {
     alert("No user is signed in");
   }
+}
+
+function clearForm() {
+  document.querySelector("#form-event-title").value = "";
+  document.querySelector("#form-event-description").value = "";
+  document.querySelector("#form-event-location").value = "";
+  document.querySelector("#form-event-start").value = "";
+  document.querySelector("#form-event-end").value = "";
+  document.querySelector("#form-event-participants").value = "";
 }
 
 function setup() {
@@ -90,6 +101,12 @@ function setup() {
     ev.preventDefault();
     addEvent();
   });
+  document
+    .querySelector("#cancel-form-button")
+    .addEventListener("click", () => {
+      toggleForm(false);
+      clearForm();
+    });
 }
 
 $(document).ready(setup);
