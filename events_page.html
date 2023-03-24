@@ -4,12 +4,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles/events.css">
+    <link rel="stylesheet" href="styles/events.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="scripts/events.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="./scripts/firebaseapi.js"></script>
+    <script src="./scripts/events.js"></script>
     <title>Events</title>
   </head>
   <body>
+    <template id="event-card-template">
+      <div class="card">
+        <h3 id="event-name"></h3>
+        <p id="event-details"></p>
+        <ul>
+          <li id="event-location"></li>
+          <li id="event-start-time"></li>
+          <li id="event-end-time"></li>
+          <li id="event-required-participants"></li>
+        </ul>
+      </div>
+    </template>
     <header>
       <h2>RescuEase</h2>
       <nav>
@@ -22,91 +38,30 @@
     <main>
       <h1>Events</h1>
       <container id="form-container">
-        <form id="add-event-form" style="display: none;">
-          <input id="event-name" type="text" placeholder="Event name"/><br>
-          <input id="event-description" type="text" placeholder="General description"/><br>
-          <input id="event-location" type="text" placeholder="Event location"/><br>
-          <input id="event-date" type="date" placeholder="Event date"/><br>
-          <input id="event-participants" type="number" placeholder="Required volunteers"/><br>
-          <input id="event-image" type="text" placeholder="Image URL"/><br>
+        <form id="add-event-form" style="display: none">
+          <input id="event-name" type="text" placeholder="Event name" /><br />
+          <input
+            id="event-description"
+            type="text"
+            placeholder="General description"
+          /><br />
+          <input
+            id="event-location"
+            type="text"
+            placeholder="Event location"
+          /><br />
+          <input id="event-date" type="date" placeholder="Event date" /><br />
+          <input
+            id="event-participants"
+            type="number"
+            placeholder="Required volunteers"
+          /><br />
+          <input id="event-image" type="text" placeholder="Image URL" /><br />
           <button type="submit">Submit</button>
         </form>
       </container>
-      <button onclick="show_form(2)">Add Event</button>
-      <section>
-        <div class="card">
-          <h3>Event name</h3>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores
-            rem optio illo, tempore quidem recusandae veniam, illum modi dicta
-            provident, repellendus amet delectus. Vero modi, libero magnam
-            molestiae obcaecati quisquam.
-          </p>
-          <ul>
-            <li>Location: </li>
-            <li>Date: </li>
-            <li>Estimated required participants: </li>
-          </ul>
-          <img src="https://picsum.photos/200/300" alt="">
-        </div>
-        <div class="card">
-          <h3>Event name</h3>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores
-            rem optio illo, tempore quidem recusandae veniam, illum modi dicta
-            provident, repellendus amet delectus. Vero modi, libero magnam
-            molestiae obcaecati quisquam.
-          </p>
-          <ul>
-            <li>Location: </li>
-            <li>Date: </li>
-            <li>Estimated required participants: </li>
-          </ul>
-          <img src="https://picsum.photos/200/300" alt="">
-        </div>   <div class="card">
-          <h3>Event name</h3>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores
-            rem optio illo, tempore quidem recusandae veniam, illum modi dicta
-            provident, repellendus amet delectus. Vero modi, libero magnam
-            molestiae obcaecati quisquam.
-          </p>
-          <ul>
-            <li>Location: </li>
-            <li>Date: </li>
-            <li>Estimated required participants: </li>
-          </ul>
-          <img src="https://picsum.photos/200/300" alt="">
-        </div>   <div class="card">
-          <h3>Event name</h3>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores
-            rem optio illo, tempore quidem recusandae veniam, illum modi dicta
-            provident, repellendus amet delectus. Vero modi, libero magnam
-            molestiae obcaecati quisquam.
-          </p>
-          <ul>
-            <li>Location: </li>
-            <li>Date: </li>
-            <li>Estimated required participants: </li>
-          </ul>
-          <img src="https://picsum.photos/200/300" alt="">
-        </div>   <div class="card">
-          <h3>Event name</h3>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores
-            rem optio illo, tempore quidem recusandae veniam, illum modi dicta
-            provident, repellendus amet delectus. Vero modi, libero magnam
-            molestiae obcaecati quisquam.
-          </p>
-          <ul>
-            <li>Location: </li>
-            <li>Date: </li>
-            <li>Estimated required participants: </li>
-          </ul>
-          <img src="https://picsum.photos/200/300" alt="">
-        </div>
-      </div>
+      <button id="show-form-button">Add Event</button>
+      <section id="event-list"></section>
     </main>
   </body>
 </html>
