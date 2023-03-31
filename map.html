@@ -57,7 +57,7 @@
     <header class="bg-light py-3">
         <div class="container">
           <nav class="navbar navbar-expand-md navbar-light">
-            <a class="navbar-brand" href="#">RescuEase</a>
+            <a class="navbar-brand" href="index.html">RescuEase</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -69,10 +69,13 @@
                 <li class="nav-item">
                   <a class="nav-link" href="events.html">Events</a>
                 </li>
+				<li class="nav-item active">
+					<a class="nav-link" href="Map.html">Map</a>
+				  </li>
                 <li class="nav-item">
                   <a class="nav-link" href="about.html">About Us</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item ">
                   <a class="nav-link" href="contact.html">Contact Us</a>
                 </li>
               </ul>
@@ -86,39 +89,37 @@
 	</div>
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHWlGOl8ZO8_TTvipC6Qqi5gbbW2i7q78&callback=initMap"></script>
 	<script>
-		// Initialize and add the map
-		function initMap() {
-			// Define the coordinates for the center of the map
-			var center = { lat: 49.2827, lng: -123.1207 };
-			
-			// Define the map options
-			var mapOptions = {
-				center: center,
-				zoom: 10
-			};
-			
-			// Create the map object
-			var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-			
-			// Define an array of event locations
-			var locations = [
-				{ lat: 49.2463, lng: -123.1162, name: 'Event 1' },
-				{ lat: 49.2497, lng: -123.1197, name: 'Event 2' },
-				{ lat: 49.2606, lng: -123.1139, name: 'Event 3' },
-				{ lat: 49.2727, lng: -123.1270, name: 'Event 4' }
-			];
-			
-			// Loop through the locations array and add markers to the map
-			for (var i = 0; i < locations.length; i++) {
-				var location = locations[i];
-				
-				var marker = new google.maps.Marker({
-					position: { lat: location.lat, lng: location.lng },
-					map: map,
-					title: location.name
-				});
-			}
+	function initMap() {
+		var center = { lat: 49.2827, lng: -123.1207 };
+		var mapOptions = {
+			center: center,
+			zoom: 10
+		};
+		var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+		var infoWindow = new google.maps.InfoWindow();
+		var locations = [
+			{ lat: 49.2463, lng: -123.1162, name: 'Event 1', time: '10:00 AM', location: 'Location 1' },
+			{ lat: 49.2497, lng: -123.1197, name: 'Event 2', time: '2:00 PM', location: 'Location 2' },
+			{ lat: 49.2606, lng: -123.1139, name: 'Event 3', time: '6:00 PM', location: 'Location 3' },
+			{ lat: 49.2727, lng: -123.1270, name: 'Event 4', time: '8:00 PM', location: 'Location 4' }
+		];
+
+		for (var i = 0; i < locations.length; i++) {
+			var location = locations[i];
+			var marker = new google.maps.Marker({
+				position: { lat: location.lat, lng: location.lng },
+				map: map,
+				title: location.name
+			});
+
+			google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
+				return function() {
+					infoWindow.setContent(locations[i].name + '<br>Time: ' + locations[i].time + '<br>Location: ' + locations[i].location);
+					infoWindow.open(map, marker);
+				}
+			})(marker, i));
 		}
+	}
 	</script>
 </body>
 </html>
