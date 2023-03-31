@@ -8,7 +8,7 @@ function toggleForm(show) {
   }
 }
 
-function populateEventList() {
+function populateEventList(currentUser) {
   let template = document.getElementById("event-card-template");
 
   const formatOptions = {
@@ -44,6 +44,25 @@ function populateEventList() {
           "End: " + endTime.toDate().toLocaleString("en-US", formatOptions);
         card.querySelector("#event-required-participants").innerText =
           "Required Participants: " + requiredParticipants;
+        let attendBtn = card.querySelector("#attend-event-button");
+        db.collection("users")
+          .doc(currentUser.uid)
+          .collection("attending_events")
+          .where("event", "==", event.ref)
+          .get()
+          .then((docs) => {
+            if (docs.size !== 0) {
+              attendBtn.innerText = "Attending";
+              attendBtn.disabled = true;
+            }
+          });
+        card
+          .querySelector("#attend-event-button")
+          .addEventListener("click", (ev) => {
+            attendEvent(event.ref);
+            ev.target.innerText = "Attending";
+            ev.target.disabled = true;
+          });
 
         document.querySelector("#event-list").appendChild(card);
       });
@@ -91,14 +110,35 @@ function clearForm() {
   document.querySelector("#form-event-participants").value = "";
 }
 
+function attendEvent(event) {
+  const currentUser = firebase.auth().currentUser;
+  if (currentUser !== null) {
+    db.collection("users")
+      .doc(currentUser.uid)
+      .collection("attending_events")
+      .add({
+        event,
+      });
+  } else {
+    alert("No user is signed in");
+  }
+}
+
 function setup() {
-  populateEventList();
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      populateEventList(user);
+
+      document
+        .querySelector("#add-event-form")
+        .addEventListener("submit", (ev) => {
+          ev.preventDefault();
+          addEvent();
+        });
+    }
+  });
   document.querySelector("#show-form-button").addEventListener("click", () => {
     toggleForm(true);
-  });
-  document.querySelector("#add-event-form").addEventListener("submit", (ev) => {
-    ev.preventDefault();
-    addEvent();
   });
   document
     .querySelector("#cancel-form-button")
