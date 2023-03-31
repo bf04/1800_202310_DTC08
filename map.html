@@ -1,26 +1,30 @@
-
-
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<title>Events Map</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-  <!-- Boostrap Library JS CDN  go here -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+	<!-- Boostrap Library JS CDN  go here -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
 
-      <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<!-- Font Awesome CSS -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
-  integrity="sha384-HzLeBuhoNPvSl5KYg5yPHvrvlGvILcwT0jROz9Xj/KGyjt6vJ85Hs/sjBuhg1bZ+" crossorigin="anonymous">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- Font Awesome CSS -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+		integrity="sha384-HzLeBuhoNPvSl5KYg5yPHvrvlGvILcwT0jROz9Xj/KGyjt6vJ85Hs/sjBuhg1bZ+" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 	<style>
 		/* Set up some basic styles for the page */
 		body {
@@ -28,102 +32,155 @@
 			padding: 0;
 			font-family: Arial, sans-serif;
 		}
-		
+
 		.container-map {
 			max-width: 1200px;
 			margin: 0 auto;
 			padding: 20px;
 			box-sizing: border-box;
 		}
-		
+
 		h1 {
 			text-align: center;
 			margin-top: 0;
 			margin-bottom: 20px;
 		}
-		
+
 		/* Set up the styles for the map */
 		#map {
 			height: 600px;
 			width: 100%;
 			border: 1px solid #ccc;
-			box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 			border-radius: 5px;
 			margin-bottom: 20px;
 		}
+
+		.info-window {
+			max-width: 200px;
+			font-family: Arial, sans-serif;
+			font-size: 14px;
+			line-height: 1.5;
+			text-align: left;
+		}
+
+		.info-window h2 {
+			font-size: 16px;
+			font-weight: bold;
+			margin-top: 0;
+		}
+
+		.info-window p {
+			margin: 5px 0;
+		}
+
+		.info-window ul {
+			list-style-type: none;
+			padding-left: 0;
+			margin: 5px 0;
+		}
+
+		.info-window li {
+			display: flex;
+			align-items: center;
+			margin-bottom: 5px;
+		}
+
+		.info-window li img {
+			margin-right: 5px;
+		}
+
+		.info-window li span {
+			font-weight: bold;
+			margin-right: 5px;
+		}
 	</style>
 </head>
+
 <body>
-    <header class="bg-light py-3">
-        <div class="container">
-          <nav class="navbar navbar-expand-md navbar-light">
-            <a class="navbar-brand" href="index.html">RescuEase</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="events.html">Events</a>
-                </li>
-				<li class="nav-item active">
-					<a class="nav-link" href="Map.html">Map</a>
-				  </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="about.html">About Us</a>
-                </li>
-                <li class="nav-item ">
-                  <a class="nav-link" href="contact.html">Contact Us</a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-      </header>
+	<header class="bg-light py-3">
+		<div class="container">
+			<nav class="navbar navbar-expand-md navbar-light">
+				<a class="navbar-brand" href="index.html">RescuEase</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="index.html">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="events.html">Events</a>
+						</li>
+						<li class="nav-item active">
+							<a class="nav-link" href="Map.html">Map</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="about.html">About Us</a>
+						</li>
+						<li class="nav-item ">
+							<a class="nav-link" href="contact.html">Contact Us</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</header>
 	<div class="container-map">
 		<h1>Events Map</h1>
 		<div id="map"></div>
 	</div>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHWlGOl8ZO8_TTvipC6Qqi5gbbW2i7q78&callback=initMap"></script>
+	<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHWlGOl8ZO8_TTvipC6Qqi5gbbW2i7q78&callback=initMap"></script>
+	<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore.js"></script>
+
 	<script>
-	function initMap() {
-		var center = { lat: 49.2827, lng: -123.1207 };
-		var mapOptions = {
-			center: center,
-			zoom: 10
+		// Initialize Firebase
+		var firebaseConfig = {
+			apiKey: "AIzaSyBU9_2o-OwAzNoKvtttbuJjSqvix5A9YMs",
+			authDomain: "team08project.firebaseapp.com",
+			projectId: "team08project",
+			storageBucket: "team08project.appspot.com",
+			messagingSenderId: "454792851968",
+			appId: "1:454792851968:web:cf01c34f205dc04c729ee5",
+			measurementId: "G-W8TKKEZXT4"
 		};
-		var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-		var infoWindow = new google.maps.InfoWindow();
-		var locations = [
-			{ lat: 49.2463, lng: -123.1162, name: 'Event 1', time: '10:00 AM', location: 'Location 1' },
-			{ lat: 49.2497, lng: -123.1197, name: 'Event 2', time: '2:00 PM', location: 'Location 2' },
-			{ lat: 49.2606, lng: -123.1139, name: 'Event 3', time: '6:00 PM', location: 'Location 3' },
-			{ lat: 49.2727, lng: -123.1270, name: 'Event 4', time: '8:00 PM', location: 'Location 4' }
-		];
+		firebase.initializeApp(firebaseConfig);
 
-		for (var i = 0; i < locations.length; i++) {
-			var location = locations[i];
-			var marker = new google.maps.Marker({
-				position: { lat: location.lat, lng: location.lng },
-				map: map,
-				title: location.name
+		function initMap() {
+			var center = { lat: 49.22965506037057, lng: -123.032115961814 };
+			var mapOptions = {
+				center: center,
+				zoom: 10
+			};
+			var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+			var infoWindow = new google.maps.InfoWindow();
+
+			// Retrieve events data from Firebase
+			var eventsRef = firebase.firestore().collection("events");
+			eventsRef.get().then((querySnapshot) => {
+				querySnapshot.forEach((doc) => {
+					var event = doc.data();
+					var marker = new google.maps.Marker({
+						position: { lat: event.location_latitude, lng: event.location_longitude },
+						map: map,
+						title: event.title
+					});
+
+					google.maps.event.addListener(marker, 'mouseover', (function (marker, event) {
+						return function () {
+							infoWindow.setContent(event.title + '<br>Start Time: ' + event.start_time + '<br>End Time: ' + event.end_time + '<br>Location: ' + event.location + '<br>Required Participants: ' + event.required_participants);
+							infoWindow.open(map, marker);
+						}
+					})(marker, event));
+				});
 			});
-
-			google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
-				return function() {
-					infoWindow.setContent(locations[i].name + '<br>Time: ' + locations[i].time + '<br>Location: ' + locations[i].location);
-					infoWindow.open(map, marker);
-				}
-			})(marker, i));
-		}
-	}
+		}   
 	</script>
+
+
 </body>
+
 </html>
-
-
-
-  

@@ -73,6 +73,8 @@ function addEvent() {
   let title = document.querySelector("#form-event-title").value;
   let description = document.querySelector("#form-event-description").value;
   let location = document.querySelector("#form-event-location").value;
+  let location_latitude = parseFloat(document.querySelector("#form-event-latitude").value);
+  let location_longitude = parseFloat(document.querySelector("#form-event-longitude").value);
   let start_time = new Date(document.querySelector("#form-event-start").value);
   let end_time = new Date(document.querySelector("#form-event-end").value);
   let required_participants = document.querySelector(
@@ -86,6 +88,8 @@ function addEvent() {
         title,
         description,
         location,
+        location_latitude,
+        location_longitude,
         start_time,
         end_time,
         required_participants,
@@ -105,6 +109,8 @@ function clearForm() {
   document.querySelector("#form-event-title").value = "";
   document.querySelector("#form-event-description").value = "";
   document.querySelector("#form-event-location").value = "";
+  document.querySelector("#form-event-latitude").value = "";
+  document.querySelector("#form-event-longitude").value = "";
   document.querySelector("#form-event-start").value = "";
   document.querySelector("#form-event-end").value = "";
   document.querySelector("#form-event-participants").value = "";
