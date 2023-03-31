@@ -8,7 +8,7 @@ function toggleForm(show) {
   }
 }
 
-function populateEventList(currentUser) {
+async function populateEventList(currentUser) {
   let template = document.getElementById("event-card-template");
 
   const formatOptions = {
@@ -19,54 +19,56 @@ function populateEventList(currentUser) {
     minute: "2-digit",
   };
 
-  db.collection("events")
-    .orderBy("start_time")
-    .get()
-    .then((events) => {
-      document.querySelector("#event-list").innerHTML = "";
-      events.forEach((event) => {
-        let description = event.data().description;
-        let endTime = event.data().end_time;
-        let location = event.data().location;
-        let startTime = event.data().start_time;
-        let title = event.data().title;
-        let requiredParticipants = event.data().required_participants;
+  let events = await db.collection("events").orderBy("start_time").get();
 
-        let card = template.content.cloneNode(true);
+  document.querySelector("#event-list").innerHTML = "";
 
-        card.querySelector("#event-name").innerText = title;
-        card.querySelector("#event-details").innerText = description;
-        card.querySelector("#event-location").innerText =
-          "Location: " + location;
-        card.querySelector("#event-start-time").innerText =
-          "Start: " + startTime.toDate().toLocaleString("en-US", formatOptions);
-        card.querySelector("#event-end-time").innerText =
-          "End: " + endTime.toDate().toLocaleString("en-US", formatOptions);
-        card.querySelector("#event-required-participants").innerText =
-          "Required Participants: " + requiredParticipants;
-        let attendBtn = card.querySelector("#attend-event-button");
-        db.collection("users")
-          .doc(currentUser.uid)
-          .collection("attending_events")
-          .where("event", "==", event.ref)
-          .get()
-          .then((docs) => {
-            if (docs.size !== 0) {
-              attendBtn.innerText = "Attending";
-              attendBtn.disabled = true;
-            }
-          });
-        card
-          .querySelector("#attend-event-button")
-          .addEventListener("click", (ev) => {
-            attendEvent(event.ref);
-            ev.target.innerText = "Attending";
-            ev.target.disabled = true;
-          });
+  events.forEach(async (event) => {
+    let description = event.data().description;
+    let endTime = event.data().end_time;
+    let location = event.data().location;
+    let startTime = event.data().start_time;
+    let title = event.data().title;
+    let requiredParticipants = event.data().required_participants;
+    let author = event.data().author;
+    let authorInfo = await db.collection("users").doc(author).get();
+    let authorName = authorInfo.data().name;
 
-        document.querySelector("#event-list").appendChild(card);
+    let card = template.content.cloneNode(true);
+
+    card.querySelector("#event-name").innerText = title;
+    card.querySelector("#event-details").innerText = description;
+    card.querySelector("#event-location").innerText = "Location: " + location;
+    card.querySelector("#event-start-time").innerText =
+      "Start: " + startTime.toDate().toLocaleString("en-US", formatOptions);
+    card.querySelector("#event-end-time").innerText =
+      "End: " + endTime.toDate().toLocaleString("en-US", formatOptions);
+    card.querySelector("#event-required-participants").innerText =
+      "Required Participants: " + requiredParticipants;
+    card.querySelector("#event-author").innerText = "Author: " + authorName;
+
+    let attendBtn = card.querySelector("#attend-event-button");
+    let docs = await db
+      .collection("users")
+      .doc(currentUser.uid)
+      .collection("attending_events")
+      .where("event", "==", event.ref)
+      .get();
+    if (docs.size !== 0) {
+      attendBtn.innerText = "Attending";
+      attendBtn.disabled = true;
+    }
+
+    card
+      .querySelector("#attend-event-button")
+      .addEventListener("click", (ev) => {
+        attendEvent(event.ref);
+        ev.target.innerText = "Attending";
+        ev.target.disabled = true;
       });
-    });
+
+    document.querySelector("#event-list").appendChild(card);
+  });
 }
 
 function addEvent() {
