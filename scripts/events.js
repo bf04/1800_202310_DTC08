@@ -8,6 +8,7 @@ function toggleForm(show) {
   }
 }
 
+
 async function updateAttend(event, button) {
   const currentUser = firebase.auth().currentUser;
   if (currentUser !== null) {
@@ -104,6 +105,7 @@ async function populateEventList(currentUser) {
 
     document.querySelector("#event-list").appendChild(card);
   });
+  
 }
 
 function addEvent() {
