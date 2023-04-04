@@ -8,6 +8,44 @@ function toggleForm(show) {
   }
 }
 
+async function updateAttend(event, button) {
+  const currentUser = firebase.auth().currentUser;
+  if (currentUser !== null) {
+    let docs = await db
+      .collection("users")
+      .doc(currentUser.uid)
+      .collection("attending_events")
+      .where("event", "==", event.ref)
+      .get();
+
+    if (docs.size !== 0) {
+      let docs = await db
+        .collection("users")
+        .doc(currentUser.uid)
+        .collection("attending_events")
+        .where("event", "==", event.ref)
+        .get();
+      docs.forEach((doc) => doc.ref.delete());
+      button.innerText = "Attend";
+      console.log("they're no longer attending");
+    } else {
+      await db
+        .collection("users")
+        .doc(currentUser.uid)
+        .collection("attending_events")
+        .add({
+          event: event.ref,
+        });
+
+      button.innerText = "Attending";
+
+      console.log("they're attending now");
+    }
+  } else {
+    alert("No user is signed in");
+  }
+}
+
 async function populateEventList(currentUser) {
   let template = document.getElementById("event-card-template");
 
@@ -56,15 +94,12 @@ async function populateEventList(currentUser) {
       .get();
     if (docs.size !== 0) {
       attendBtn.innerText = "Attending";
-      attendBtn.disabled = true;
     }
 
     card
       .querySelector("#attend-event-button")
       .addEventListener("click", (ev) => {
-        attendEvent(event.ref);
-        ev.target.innerText = "Attending";
-        ev.target.disabled = true;
+        updateAttend(event, ev.target);
       });
 
     document.querySelector("#event-list").appendChild(card);
@@ -75,8 +110,12 @@ function addEvent() {
   let title = document.querySelector("#form-event-title").value;
   let description = document.querySelector("#form-event-description").value;
   let location = document.querySelector("#form-event-location").value;
-  let location_latitude = parseFloat(document.querySelector("#form-event-latitude").value);
-  let location_longitude = parseFloat(document.querySelector("#form-event-longitude").value);
+  let location_latitude = parseFloat(
+    document.querySelector("#form-event-latitude").value
+  );
+  let location_longitude = parseFloat(
+    document.querySelector("#form-event-longitude").value
+  );
   let start_time = new Date(document.querySelector("#form-event-start").value);
   let end_time = new Date(document.querySelector("#form-event-end").value);
   let required_participants = document.querySelector(
@@ -116,20 +155,6 @@ function clearForm() {
   document.querySelector("#form-event-start").value = "";
   document.querySelector("#form-event-end").value = "";
   document.querySelector("#form-event-participants").value = "";
-}
-
-function attendEvent(event) {
-  const currentUser = firebase.auth().currentUser;
-  if (currentUser !== null) {
-    db.collection("users")
-      .doc(currentUser.uid)
-      .collection("attending_events")
-      .add({
-        event,
-      });
-  } else {
-    alert("No user is signed in");
-  }
 }
 
 function setup() {
