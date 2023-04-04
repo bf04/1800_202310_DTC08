@@ -148,7 +148,7 @@
 			measurementId: "G-W8TKKEZXT4"
 		};
 		firebase.initializeApp(firebaseConfig);
-
+	
 		function initMap() {
 			var center = { lat: 49.22965506037057, lng: -123.032115961814 };
 			var mapOptions = {
@@ -157,28 +157,32 @@
 			};
 			var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 			var infoWindow = new google.maps.InfoWindow();
-
+	
 			// Retrieve events data from Firebase
 			var eventsRef = firebase.firestore().collection("events");
 			eventsRef.get().then((querySnapshot) => {
 				querySnapshot.forEach((doc) => {
 					var event = doc.data();
+					var start_time = new Date(event.start_time.seconds * 1000 + event.start_time.nanoseconds / 1000000);
+					var end_time = new Date(event.end_time.seconds * 1000 + event.end_time.nanoseconds / 1000000);
+	
 					var marker = new google.maps.Marker({
 						position: { lat: event.location_latitude, lng: event.location_longitude },
 						map: map,
 						title: event.title
 					});
-
+	
 					google.maps.event.addListener(marker, 'mouseover', (function (marker, event) {
 						return function () {
-							infoWindow.setContent(event.title + '<br>Start Time: ' + event.start_time + '<br>End Time: ' + event.end_time + '<br>Location: ' + event.location + '<br>Required Participants: ' + event.required_participants);
+							infoWindow.setContent(event.title + '<br>Start Time: ' + start_time + '<br>End Time: ' + end_time + '<br>Location: ' + event.location + '<br>Required Participants: ' + event.required_participants);
 							infoWindow.open(map, marker);
 						}
 					})(marker, event));
 				});
 			});
-		}   
+		}
 	</script>
+	
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
   integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
   crossorigin="anonymous"></script>
