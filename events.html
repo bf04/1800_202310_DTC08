@@ -53,6 +53,9 @@
                 <a class="nav-link" href="Map.html">Map</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="profile1.html">Profile</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="about.html">About Us</a>
               </li>
               <li class="nav-item">
@@ -67,6 +70,7 @@
       <div class="card">
         <h3 id="event-name"></h3>
         <p id="event-details"></p>
+        <br>
         <ul>
           <li id="event-location"></li>
           <li id="event-start-time"></li>
@@ -89,7 +93,15 @@
 });
     </script>
 <main>
-
+  <div class="container-fluid">
+    <div class="container p-5">
+        <h2 class="display-5">
+            Hello, <span id="name-goes-here"> Name.</span>
+        </h2>
+        <hr />
+        <h5> Check out the following volunteer events below, or add your an event yourself!</h5>
+    </div>
+</div>
   <div class="row mb-3">
     <div class="lg">
       <button id="show-form-button" type="button" class="btn btn-success">Add Event</button>
@@ -164,8 +176,9 @@
   </form>
   
 
-  <div id="event-list"></div>
+  <div class="container" id="event-list"></div>
 </main>
+<footer id="footerPlaceholder"></footer>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 crossorigin="anonymous"></script>
