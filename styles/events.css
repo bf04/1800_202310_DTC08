@@ -76,16 +76,6 @@ button {
   }
 }
 
-footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: #f8f9fa;
-  padding: 20px;
-}
-
-
 #show-form-button {
   background-color: white;
   border-radius: 0.5rem;
