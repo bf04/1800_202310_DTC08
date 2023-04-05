@@ -28,7 +28,6 @@ async function updateAttend(event, button) {
       docs.forEach((doc) => doc.ref.delete());
       button.innerText = "Attend";
       button.classList.remove("attending");
-      console.log("they're no longer attending");
     } else {
       await db
         .collection("users")
@@ -40,8 +39,6 @@ async function updateAttend(event, button) {
 
       button.innerText = "Attending";
       button.classList.add("attending");
-
-      console.log("they're attending now");
     }
   } else {
     alert("No user is signed in");
@@ -160,16 +157,10 @@ function clearForm() {
   document.querySelector("#form-event-participants").value = "";
 }
 
-async function updateName(user) {
-  const doc = await db.collection("users").doc(user.uid).get();
-  document.querySelector("#name-goes-here").innerText = doc.data().name;
-}
-
 function setup() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       populateEventList(user);
-      updateName(user);
 
       document
         .querySelector("#add-event-form")
