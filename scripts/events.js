@@ -8,7 +8,6 @@ function toggleForm(show) {
   }
 }
 
-
 async function updateAttend(event, button) {
   const currentUser = firebase.auth().currentUser;
   if (currentUser !== null) {
@@ -28,6 +27,7 @@ async function updateAttend(event, button) {
         .get();
       docs.forEach((doc) => doc.ref.delete());
       button.innerText = "Attend";
+      button.classList.remove("attending");
       console.log("they're no longer attending");
     } else {
       await db
@@ -39,6 +39,7 @@ async function updateAttend(event, button) {
         });
 
       button.innerText = "Attending";
+      button.classList.add("attending");
 
       console.log("they're attending now");
     }
@@ -95,6 +96,7 @@ async function populateEventList(currentUser) {
       .get();
     if (docs.size !== 0) {
       attendBtn.innerText = "Attending";
+      attendBtn.classList.add("attending");
     }
 
     card
@@ -105,7 +107,6 @@ async function populateEventList(currentUser) {
 
     document.querySelector("#event-list").appendChild(card);
   });
-  
 }
 
 function addEvent() {
@@ -159,10 +160,16 @@ function clearForm() {
   document.querySelector("#form-event-participants").value = "";
 }
 
+async function updateName(user) {
+  const doc = await db.collection("users").doc(user.uid).get();
+  document.querySelector("#name-goes-here").innerText = doc.data().name;
+}
+
 function setup() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       populateEventList(user);
+      updateName(user);
 
       document
         .querySelector("#add-event-form")
@@ -183,22 +190,4 @@ function setup() {
     });
 }
 
-
-function insertNameFromFirestore() {
-  //check if user is logged in
-  firebase.auth().onAuthStateChanged(user => {
-      if (user) { //if user logged in
-          console.log(user.uid)
-          db.collection("users").doc(user.uid).get().then(userDoc => {
-              console.log(userDoc.data().name)
-              userName = userDoc.data().name;
-              console.log(userName)
-              document.getElementById("name-goes-here").innerHTML = userName;
-
-          })
-      }
-  })
-
-}
-insertNameFromFirestore();
 $(document).ready(setup);

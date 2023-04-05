@@ -53,66 +53,61 @@ button {
 }
 
 @media screen and (min-width: 800px) {
-    div.card {
-        padding: 2rem;
-    }
+  div.card {
+      padding: 2rem;
+  }
 }
 
 footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: #f8f9fa;
-    padding: 20px;
-  }
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
 
 
-  
-  
-  #attend-event-button:hover {
-    background-color: #3e8e41;
-  }
-  
-  #show-form-button {
-    margin-top: -20px;
-  }
+#show-form-button {
+  margin-top: -20px;
+}
 
-  .card {
-    width: 100%;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid black;
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px grey;
-  }
-  
-  .card h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .card p {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .card li {
-    font-size: 16px;
-    margin-bottom: 5px;
-  }
-  
-  #attend-event-button {
-    background-color: blue;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .btn-attended{
-    background-color: lightgreen;
-  }
+.card {
+  width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px grey;
+}
+
+.card h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.card li {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+#attend-event-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#attend-event-button.attending {
+  background-color: lightgreen;
+  color: black;
+}
