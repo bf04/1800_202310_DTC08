@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles/events.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
@@ -39,6 +38,7 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="styles/events.css" />
     <title>Events</title>
   </head>
   <body>
@@ -80,7 +80,7 @@
       </div>
     </header>
     <template id="event-card-template">
-      <div class="card">
+      <div class="event-card">
         <h3 id="event-name"></h3>
         <p id="event-details"></p>
         <br />
@@ -95,24 +95,9 @@
       </div>
     </template>
     <main>
-      <div class="container-fluid">
-        <div class="container p-5">
-          <h2 class="display-5">
-            Hello, <span id="name-goes-here"> Name.</span>
-          </h2>
-          <hr />
-          <h5>
-            Check out the following volunteer events below, or add your an event
-            yourself!
-          </h5>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="lg">
-          <button id="show-form-button" type="button" class="btn btn-success">
-            Add Event
-          </button>
-        </div>
+      <div class="title">
+        <h3>Current Events</h3>
+        <button id="show-form-button" type="button">Add Event</button>
       </div>
       <form id="add-event-form" style="display: none">
         <div class="form-group row">
@@ -241,8 +226,7 @@
         </div>
       </form>
 
-      <div class="container" id="event-list"></div>
+      <section id="event-list"></section>
     </main>
-    <footer id="footerPlaceholder"></footer>
   </body>
 </html>
