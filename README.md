@@ -2,17 +2,18 @@
 
 ## 1. Project Description
 
-State your app in a nutshell, or one-sentence pitch. Give some elaboration on what the core features are.
-This browser based web application to ...
+Our team DTC-08 is developing a web application that allows volunteers
+to join and provide assistance to areas affected by extreme weather.
+
 
 ## 2. Names of Contributors
 
 List team members and/or short bio's here...
 
-* Hi my name is Ray! I'm excited to work on this project.
-* Arsam here hello
-* brYAN IS HERE
-* sARAH MIGHT BE HERE
+* Ray
+* Arsam 
+* Bryan
+* Sarah
 
 ## 3. Technologies and Resources Used
 
@@ -21,32 +22,30 @@ List technologies (with version numbers), API's, icons, fonts, images, media or 
 - HTML, CSS, JavaScript
 - Bootstrap 5.0 (Frontend library)
 - Firebase 8.0 (BAAS - Backend as a Service)
-- ...
+- Google Map API
+- jQuery
 
 ## 4. Complete setup/installion/usage
 
 State what a user needs to do when they come to your project. How do others start using your code or application?
 Here are the steps ...
 
-- ...
-- ...
-- ...
-
+- Go to our hosted link using firebase
+- Download repo and open index.html in ur browswer
 ## 5. Known Bugs and Limitations
 
 Here are some known bugs:
 
-- ...
-- ...
-- ...
+- Need to refresh page after every event is added
+- Map is bugged out in mobile frame; won't let you hover over the pin point
 
 ## 6. Features for Future
 
 What we'd like to build in the future:
 
-- ...
-- ...
-- ...
+- Feature where vlounteer hours are logged
+- Logout feature
+- Profile picture for the author of the event post
 
 ## 7. Contents of Folder
 
