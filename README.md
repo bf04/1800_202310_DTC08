@@ -82,7 +82,4 @@ It has the following subfolders and files:
 ├── styles                   # Folder for styles
     /events.css              # css for the event page
     /login.css               # css for the login page     
-
-
-
 ```
