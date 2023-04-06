@@ -56,15 +56,32 @@ Content of the project folder:
 ├── .gitignore               # Git ignore file
 ├── index.html               # landing HTML file, this is what users see when you come to url
 └── README.md
+└── login.html               # login HTML file, this is where users login
+└── events.html              # events HTML file, this is where users attend and create events
+└── profile1.html            # profile1 HTML file, this is where users can change their name and add a phone number to their profile
+└── map.html                 # map HTML file, this is where users can see where the events are being held
+└── about.html               # about HTML file, this is where users can see infomation about our organization
+└── contact.html             # contact HTML file, this is where users can contact us using via email
+
 
 It has the following subfolders and files:
 ├── .git                     # Folder for git repo
 ├── images                   # Folder for images
-    /blah.jpg                # Acknowledge source
+    /cardimg1.jpg            # image for the index.html (landing page)
+    /cardimg2.jpg            # image for the index.html (landing page)
+    /cardimg3.jpg            # image for the index.html (landing page)
+    /cloudlogo.png           # RescuEase logo
 ├── scripts                  # Folder for scripts
-    /blah.js                 #
+    /authentication.js       # js for loging in
+    /events.js               # js for event page 
+    /firebaseapi.js          # js that store firebase api keys
+    /navbar.js               # js for navbar
+    /profile.js              # js for the profile page
+    /script.js               # js for logging out
+    /skeleton.js             # js for switches navbar when logged in and logged out
 ├── styles                   # Folder for styles
-    /blah.css                #
+    /events.css              # css for the event page
+    /login.css               # css for the login page     
 
 
 
